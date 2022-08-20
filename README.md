@@ -1,4 +1,4 @@
-# community
+# 论坛社区开发
 
 #### 项目介绍
 基于Spring Boot框架实现讨论社区的功能，
@@ -6,6 +6,10 @@
 项目后续利用jenkins建立流水线实现持续集成，并利用自动化测试框架对项目进行测试。
 
 #### 项目整体架构
+* community项目源码： [community](./src)  
+* pytest框架自动化测试源码： [pytest](./pytest)  
+* jenkins持续集成的实现：[jenkins](./jenkins)  
+
 ![整体架构](./img/img.png "整体架构")
 
 #### 环境搭建
@@ -57,13 +61,13 @@ source sql/init_data.sql
 source sql/tables_mysql_innodb.sql` 
 
 * 安装JDK  
-通过yum命令安装jdk，不需要配置环境变量就能进行使用,前提需要网络通畅 ，查看云端目前支持安装的jdk版本：  
+通过yum命令安装jdk，不需要配置环境变量就能进行使用,前提需要网络通畅 ，查看云端目前支持安装的jdk版本：
 `yum -y list java*`  
-安装jdk11  
+安装jdk11:
 `yum install java-11-openjdk.x86_64`  
-安装完成后，测试是否安装成功  
+安装完成后，测试是否安装成功:
 `java –version`  
-搜索java文件，查找jdk安装目录  
+搜索java文件，查找jdk安装目录:
 `find / -name java`  
 或`ll /etc/alternatives/` 找到java的软连接。  
 在/ect/profile中配置环境：  
@@ -72,11 +76,11 @@ export CLASSPATH=.:$JAVA_HOME/lib
 export PATH=$PATH:$JAVA_HOME/bin`  
 
 * 安装maven  
-下载maven:  
+下载maven:
 `wget https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz --no-check-certificate`  
 解压缩：
 `tar -zxvf apache-maven-3.8.5-bin.tar.gz -C /usr/local/`  
-在/etc/profile中配置环境变量：  
+在/etc/profile中配置环境变量：
 `export MAVEN_HOME=/usr/local/apache-maven-3.8.5
 export PATH=$PATH:$MAVEN_HOME/bin`
 在settings.xml配置aliyun镜像源：  
@@ -152,5 +156,16 @@ cd tmp/ chown -R liugang:nowcoder *`
 `cp target/ROOT.war /usr/local/apache-tomcat-9.0.62/webapps/`  
 
 #### 持续集成
+* 代码准入：利用Sonar Quebe进行静态代码扫描，并集成到jenkins流水线中。  
+* Jenkins流水线：建立jenkins流水线自动拉取github代码，并进行打包，maven编译，发布到测试环境。  
+
+#### pytest框架自动化测试
+* 环境安装  
+创建项目和环境，安装pytest和selenium和pymysql：  
+`conda install pytest
+  conda install selenium
+  conda install pymysql`  
+下载并安装浏览器驱动：`https://chromedriver.storage.googleapis.com/index.html` 找到和浏览器相对应的版本，下载解压到某一目录下即可
+
 
 
